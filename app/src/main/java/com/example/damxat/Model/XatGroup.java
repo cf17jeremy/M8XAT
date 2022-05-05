@@ -3,6 +3,7 @@ package com.example.damxat.Model;
 import java.util.ArrayList;
 
 public class XatGroup {
+    //Aquesta clase serveix per definir l'objecte XatGroup per poder utilitzarho despres
     String name;
     ArrayList<String> users;
     ArrayList<Xat> xats;

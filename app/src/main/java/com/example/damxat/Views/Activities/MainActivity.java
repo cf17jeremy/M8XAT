@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyXatsFragment()).commit();
 
-        //Comentar
+        //Creem una instancia de firebase amb l'usuari actual
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void status(String status){
-        //Comentar
+        //Aqui agafem l'estatus que tingui l'usuari a firebase i l'actualitzem en l'app
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -80,14 +80,14 @@ public class MainActivity extends AppCompatActivity {
         ref.updateChildren(hashMap);
     }
 
-    //Comentar
+    //En cas de que torni a l'app o estigui interactuant l'estatus es online
     @Override
     protected void onResume(){
         super.onResume();
         status("online");
     }
 
-    //Comentar
+    //En cas de tenir l'app oberta pero no interactua es posa offline
     @Override
     protected void onPause(){
         super.onPause();
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    //Comentar
+    //Si premem log out en deslogueja i ens porta al start activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.i("TESTMENU", "hola" + item.getItemId());

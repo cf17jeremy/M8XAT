@@ -1,7 +1,7 @@
 package com.example.damxat.Model;
 
 public class Xat {
-
+    //Aquesta clase serveix per definir l'objecte Xat per poder utilitzarho despres
     String sender;
     String receiver;
     String message;

@@ -1,5 +1,6 @@
 package com.example.damxat.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ public class RecyclerUserAdapter extends RecyclerView.Adapter<RecyclerUserAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int i) {
 
         holder.recUsername.setText(arrayList.get(i).getUsername());
 

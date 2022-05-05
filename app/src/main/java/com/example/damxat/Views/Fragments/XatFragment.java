@@ -1,5 +1,7 @@
 package com.example.damxat.Views.Fragments;
 
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class XatFragment extends Fragment {
+public class  XatFragment extends Fragment {
 
     DatabaseReference ref;
     View view;
@@ -42,9 +44,19 @@ public class XatFragment extends Fragment {
     Boolean isXatUser;
     ArrayList<Xat> arrayXats;
     ArrayList<String> arrayUsers;
-
     XatGroup group;
     String groupName;
+    // creating a variable for medi recorder object class.
+    private MediaRecorder mRecorder;
+
+    // creating a variable for mediaplayer class
+    private MediaPlayer mPlayer;
+
+    // string variable is created for storing a file name
+    private static String mFileName = null;
+
+    // constant for storing audio permission
+    public static final int REQUEST_AUDIO_PERMISSION_CODE = 1;
 
     public XatFragment() {
         // Required empty public constructor
@@ -59,7 +71,7 @@ public class XatFragment extends Fragment {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //Comentar
+        //Agafem l'instancia amb els components
         bundle = getArguments();
 
         if(bundle.getString("type").equals("xatuser")){
@@ -76,7 +88,7 @@ public class XatFragment extends Fragment {
         ImageButton btnMessage = view.findViewById(R.id.btnMessage);
         EditText txtMessage = view.findViewById(R.id.txtMessage);
 
-        //Comentar
+        //Enviem un missatge
         btnMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,25 +106,25 @@ public class XatFragment extends Fragment {
         return view;
     }
 
-    //Comentar
+    //Agafem el xat
     public void getUserXat(){
         if(getArguments()!=null) {
             userid = bundle.getString("user");
 
-            //Comentar
+            //Agafem el xat de Firebase
             ref = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-            //Comentar
+            //Mostrem el missatges
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    //Comentar
+                    //Agafem l'usuari
                     User user = dataSnapshot.getValue(User.class);
 
-                    //Comentar
+                    //Posem el nom de l'usuari sobre el misatge
                     ((MainActivity) getActivity()).getSupportActionBar().setTitle(user.getUsername());
 
-                    //Comentar
+                    //Mostra el missatge
                     readUserMessages();
                 }
 
@@ -127,7 +139,7 @@ public class XatFragment extends Fragment {
 
 
     public void sendMessage(String sender, String message, boolean isXatUser){
-        //Comentar
+        //Si estem dins del xat procedim
         if(isXatUser==true){
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
@@ -165,7 +177,7 @@ public class XatFragment extends Fragment {
     public void readUserMessages(){
         arrayXats = new ArrayList<>();
 
-        //Comentar
+        //agafem l'instancia de firebase
         ref = FirebaseDatabase.getInstance().getReference("Xats");
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -173,10 +185,10 @@ public class XatFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 arrayXats.clear();
 
-                //Comentar
+                //Per cada missatge fem aixo
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Xat xat = postSnapshot.getValue(Xat.class);
-                    //Comentar
+                    //Si l'usuari que rep es correcte o el que envia es correcte
                     if(xat.getReceiver().equals(userid) && xat.getSender().equals(firebaseUser.getUid()) ||
                             xat.getReceiver().equals(firebaseUser.getUid()) && xat.getSender().equals(userid)){
                         arrayXats.add(xat);
@@ -184,7 +196,7 @@ public class XatFragment extends Fragment {
                     }
                 }
 
-                //Comentar
+                //Actualitzem la llista de misatges
                 updateRecycler();
             }
 
@@ -199,7 +211,7 @@ public class XatFragment extends Fragment {
 
     public void readGroupMessages(String groupName){
 
-        //Comentar
+        //Agafem l'instancia de firebase
         ref = FirebaseDatabase.getInstance().getReference("Groups").child(groupName);
 
         ref.addValueEventListener(new ValueEventListener() {

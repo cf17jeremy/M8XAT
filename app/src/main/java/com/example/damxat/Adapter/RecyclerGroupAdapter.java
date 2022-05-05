@@ -1,5 +1,6 @@
 package com.example.damxat.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,7 +40,7 @@ public class RecyclerGroupAdapter extends RecyclerView.Adapter<RecyclerGroupAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.recGroupName.setText(arrayList.get(position).getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

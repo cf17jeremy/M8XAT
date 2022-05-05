@@ -103,12 +103,12 @@ public class GroupsFragment extends Fragment {
 
         ArrayList<XatGroup> arrayGroups = new ArrayList<>();
 
-        //Comentar
+        //Llegim els canvis en el grup
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrayGroups.clear();
-                //Comentar
+                //Afegim el grup a l'array
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
                     XatGroup group = snapshot.getValue(XatGroup.class);
                      arrayGroups.add(group);

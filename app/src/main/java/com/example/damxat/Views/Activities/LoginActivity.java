@@ -25,31 +25,31 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Comentar
+        //Creem una instancia de firebase
         auth = FirebaseAuth.getInstance();
 
         Button loginButton = findViewById(R.id.groupAdd);
         EditText loginEmail = findViewById(R.id.groupName);
         EditText loginPassword = findViewById(R.id.loginPassword);
 
-        //Comentar
+        //Al premer aques button agafara l'email i password per fer el login
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = loginEmail.getText().toString();
                 String password = loginPassword.getText().toString();
 
-                //Comentar
+                //Fem una verifivacio de que no siguin camps buits
                 if(email.isEmpty() || password.isEmpty()){
                     Toast.makeText(LoginActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
                 }else{
-                    //Comentar
+                    //Procedim a fer el login utilitzan firebase i donantli l'email i password
                     auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            //Comentar
+                            //Verifiquem si ha donat error o no la peticio anterior
                             if(task.isSuccessful()){
-                                //Comentar
+                                //En cas de que tot estigui correcte procedim a anar al main activity
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                             }else{

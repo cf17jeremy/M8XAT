@@ -47,25 +47,25 @@ public class UserFragment extends Fragment {
         recyclerUsers = viewUsers.findViewById(R.id.recyclerMyXats);
         recyclerUsers.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //Comentar
+        //Agafem el usuaris que pertanyen al grup
         getUsers();
 
         return viewUsers;
     }
 
     public void getUsers(){
-        //Comentar
+        //Agafem l'instancia de firebase
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         ref = FirebaseDatabase.getInstance().getReference("Users");
 
         ArrayList<User> arrayUsers = new ArrayList<>();
 
-        //Comentar
+        //Escoltem el canvis a firebase
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrayUsers.clear();
-                //Comentar
+                //Afegim l'usuari a l'array
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
 

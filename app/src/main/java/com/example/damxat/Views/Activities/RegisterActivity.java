@@ -35,10 +35,10 @@ public class RegisterActivity extends AppCompatActivity {
         EditText registerEmail = findViewById(R.id.registerEmail);
         EditText registerPassword = findViewById(R.id.registerPassword);
 
-        //Comentar
+        //Creem una instancia de firebase
         auth = FirebaseAuth.getInstance();
 
-        //Comentar
+        //Al premer aques button agafara el user, email y password per crear l'usuari a firebase
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = registerEmail.getText().toString();
                 String password = registerPassword.getText().toString();
 
-                //Comentar
+                //Aqui es fa una verificacio de que els camps no estiguin buits y si esta correcte procedeix a fer el register
                 if(username.isEmpty() || email.isEmpty() || password.isEmpty()){
                     Toast.makeText(RegisterActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
                 }else{
@@ -57,27 +57,27 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    //Comentar
+    //Funcio per crear l'usuari una vegada han polsat el boto register
     public void registerUser(String username, String email, String password){
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                    @Override
                    public void onComplete(@NonNull Task<AuthResult> task) {
-                       //Comentar
+                       //Despres de crear l'usuari en firebase fem una verificacio de que s'ha realitzat correctament
                         if(task.isSuccessful()){
                             FirebaseUser firebaseUser = auth.getCurrentUser();
                             String userId = firebaseUser.getUid();
 
-                            //Comentar
+                            //Agafem l'id de l'usuari creat al firebase y el creem el seu objecte User
                             reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
                             User user = new User(userId, username, "offline");
 
-                            //Comentar
+                            //Una vegada creat l'objecte li posem la resta d'informacio dins de la base de dades
                             reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    //Comentar
+                                    //Verifiquem si s'ha insertat correctament les dades i iniciem el login activity
                                     if(task.isSuccessful()) {
                                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                         startActivity(intent);

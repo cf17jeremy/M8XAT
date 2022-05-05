@@ -1,6 +1,7 @@
 package com.example.damxat.Model;
 
 public class User {
+    //Aquesta clase serveix per definir l'objecte user per poder utilitzarho despres
     String id;
     String username;
     String status;

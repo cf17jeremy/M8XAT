@@ -18,7 +18,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //Comentar
+        //Creem la instancia de firebase i si estaba logeiat ens porta al main activity
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if(firebaseUser!=null){
             Intent intent = new Intent(StartActivity.this, MainActivity.class);
@@ -34,7 +34,7 @@ public class StartActivity extends AppCompatActivity {
         Button startLogin = findViewById(R.id.startLogin);
         Button startRegister = findViewById(R.id.startRegister);
 
-        //Comentar
+        //Al polsar el startLogin ens porta a l'activity de login
         startLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,7 +44,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        //Comentar
+        //Al polser register ens porta a l'activity de register
         startRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
